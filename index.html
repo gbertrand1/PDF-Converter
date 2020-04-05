@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>PDF-JPEG Converter</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+  </head>
+  <body>
+    <h1>PDF-JPEG Converter</h1>
+    Drag and drop the PDF document you want to convert into an image into the box below.
+    A .jpg will be created with the same name in the same folder as the original PDF.
+  </body>
+  <style>
+    #drag-file {
+        background-color: rgb(13, 13, 112);
+        color:white;
+        align-content: center;
+        text-align: center;
+        width:200px;
+        height:150px;
+    }
+</style>
+<c>
+<div id="drag-file">
+    <c>
+    <p>Drag your files here</p>
+    </c>
+</div>
+</c>
+
+<script>
+    (function () {
+        var holder = document.getElementById('drag-file');
+        var pdf_path = '';
+        holder.ondragover = () => {
+            return false;
+        };
+
+        holder.ondragleave = () => {
+            return false;
+        };
+
+        holder.ondragend = () => {
+            return false;
+        };
+
+        holder.ondrop = (e) => {
+            e.preventDefault();
+
+            for (let f of e.dataTransfer.files) {
+                console.log('File(s) you dragged here: ', f.path)
+                pdf_path = f.path
+            }
+
+            let {PythonShell} = require('python-shell')
+
+            // console.log(f.path)
+
+            var options = {
+                mode: 'text',
+                args: [pdf_path]
+            };
+
+            PythonShell.run('./engine/converter.py', options, function(err, results) {
+                if (err) throw err;
+
+                console.log('results: %j', results);
+            });
+            return false;
+        };
+    })();
+</script>
+</html>

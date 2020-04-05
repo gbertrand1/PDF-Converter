@@ -1,0 +1,17 @@
+{
+  "name": "pdf-converter",
+  "version": "0.1.0",
+  "description": "Simple app to convert pdf documents into jpeg images.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Gabriel Bertrand",
+  "license": "ISC",
+  "dependencies": {
+    "python-shell": "^1.0.8"
+  },
+  "devDependencies": {
+    "electron-packager": "^14.2.1"
+  }
+}
